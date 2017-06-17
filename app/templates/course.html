@@ -13,7 +13,6 @@
         <a href="{{url_for('file',id=course.id)}}" class="btn" type="button">课件</a> <br/>
         <a href="{{url_for('homework',id=course.id)}}" class="btn" type="button">作业</a> <br/>
         <a href="{{url_for('list',id=course.id)}}" class="btn" type="button">名单</a> <br/>
-        <a href="#" class="btn" type="button">讨论区</a>
     </div>
     <div class="col-md-10">
         {% block coursecontent %}{% endblock %}

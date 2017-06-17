@@ -118,7 +118,29 @@ def file_delete(id, fid):
 @app.route('/course/<int:id>/homework/', methods=['POST', 'GET'])
 @login_required
 def homework(id):
-    pass
+    form = HomeworkForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit() and current_user.teaching(id):
+            text = form['text'].data
+            deadline = form['deadline'].data
+            h = Homework(id, text, deadline)
+            db.session.add(h)
+            db.session.commit()
+            return redirect(url_for('homework', id=id))
+    c = Course.query.get(id)
+    h = c.homeworks
+    return render_template('homework.html', user=current_user, course=c, homeworks=h,
+                           active=2, admin=current_user.role == 'teacher', form=form)
+
+
+@app.route('/course/<int:id>/homework_delete/<int:hid>')
+@login_required
+def homework_delete(id, hid):
+    h = Homework.query.get(hid)
+    if current_user.teaching(h.course):
+        db.session.delete(h)
+        db.session.commit()
+    return redirect(url_for('homework', id=id))
 
 
 @app.route('/course/<int:id>/list/')
@@ -127,3 +149,9 @@ def list(id):
     c = Course.query.get(id)
     return render_template('list.html', user=current_user, course=c, students=c.students,
                            active=2, admin=current_user.role == 'teacher')
+
+
+@app.route('/news/')
+@login_required
+def news():
+    pass

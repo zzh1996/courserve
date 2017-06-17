@@ -33,6 +33,9 @@ class User(db.Model, UserMixin):
     def learning(self, courseid):
         return courseid in [c.id for c in self.courses]
 
+    def submitted(self, homeworkid):
+        return False
+
 
 class Course(db.Model):
     __tablename__ = 'course'
@@ -79,7 +82,15 @@ class Homework(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course = db.Column(db.Integer, db.ForeignKey('course.id'))
     text = db.Column(db.String(65536))
-    deadline = db.Column(db.DateTime)
+    deadline = db.Column(db.Date)
+
+    def __init__(self, course, text, deadline):
+        self.course = course
+        self.text = text
+        self.deadline = deadline
+
+    def stat(self):
+        return '0/' + str(len(Course.query.get(self.course).students))
 
 
 class Homework_file(db.Model):

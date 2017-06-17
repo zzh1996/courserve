@@ -1,0 +1,73 @@
+{% extends "course.html" %}
+
+{% block coursecontent %}
+<h3>作业</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            序号
+        </th>
+        <th>
+            内容
+        </th>
+        <th>
+            截止时间
+        </th>
+        {% if admin %}
+        <th>
+            提交人数
+        </th>
+        <th>
+            下载
+        </th>
+        <th>
+            操作
+        </th>
+        {% else %}
+        <th>
+            提交
+        </th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for h in homeworks %}
+    <tr>
+        <td>
+            {{loop.index}}
+        </td>
+        <td>
+            {{h.text}}
+        </td>
+        <td>
+            {{h.deadline}}
+        </td>
+        {% if admin %}
+        <td>
+            {{h.stat()}}
+        </td>
+        <td>
+            <a class="btn btn-sm btn-default" href="#">打包下载</a>
+        </td>
+        <td>
+            <a class="btn btn-sm btn-default" href={{url_for('homework_delete',id=course.id,hid=h.id)}}>删除</a>
+        </td>
+        {% else %}
+        <td>
+            {% if user.submitted(h.id) %}
+            <font color=green>已提交</font>
+            {% else %}
+            <font color=red>未提交</font>
+            {% endif %}
+            <a class="btn btn-sm btn-default" href="#">上传</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if admin %}
+{{ wtf.quick_form(form) }}
+{% endif %}
+{% endblock %}
