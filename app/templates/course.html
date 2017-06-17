@@ -2,17 +2,17 @@
 
 {% block container %}
 
-<h3>
+<h1>
     {{course.name}}
     <br/>
     <br/>
-</h3>
+</h1>
 <div class="row">
     <div class="col-md-2">
-        <a href="#" class="btn" type="button">通知</a> <br/>
-        <a href="#" class="btn" type="button">课件</a> <br/>
-        <a href="#" class="btn" type="button">作业</a> <br/>
-        <a href="#" class="btn" type="button">名单</a> <br/>
+        <a href="{{url_for('announcement',id=course.id)}}" class="btn" type="button">通知</a> <br/>
+        <a href="{{url_for('file',id=course.id)}}" class="btn" type="button">课件</a> <br/>
+        <a href="{{url_for('homework',id=course.id)}}" class="btn" type="button">作业</a> <br/>
+        <a href="{{url_for('list',id=course.id)}}" class="btn" type="button">名单</a> <br/>
         <a href="#" class="btn" type="button">讨论区</a>
     </div>
     <div class="col-md-10">

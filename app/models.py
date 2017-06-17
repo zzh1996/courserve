@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(256))
     role = db.Column(db.Enum('student', 'teacher', 'ta'))
 
-    courses = db.relationship('Course', secondary=Join_course, backref='users')
+    courses = db.relationship('Course', secondary=Join_course, backref='students')
     teachings = db.relationship('Course', backref='teacher_c')
 
     def check_password(self, password):

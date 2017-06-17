@@ -80,3 +80,20 @@ def announcement_delete(id, aid):
         db.session.delete(a)
         db.session.commit()
     return redirect(url_for('announcement', id=id))
+
+@app.route('/course/<int:id>/file/', methods=['POST', 'GET'])
+@login_required
+def file(id):
+    pass
+
+@app.route('/course/<int:id>/homework/', methods=['POST', 'GET'])
+@login_required
+def homework(id):
+    pass
+
+@app.route('/course/<int:id>/list/')
+@login_required
+def list(id):
+    c = Course.query.get(id)
+    return render_template('list.html', user=current_user, course=c, students=c.students,
+                           active=2, admin=current_user.role == 'teacher')
