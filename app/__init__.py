@@ -5,10 +5,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://courserve:courserve@localhost/courserve?charset=utf8'
 app.config['SECRET_KEY'] = 'key'
+app.config['UPLOAD_FOLDER'] = os.getcwd() + '/uploads/'
 db = SQLAlchemy(app)
 Bootstrap(app)
 

@@ -2,6 +2,8 @@ from app import db
 from flask_login import UserMixin
 import hashlib
 from datetime import datetime
+import uuid
+from app import app
 
 Join_course = db.Table('join_course',
                        db.Column('course', db.Integer, db.ForeignKey('course.id')),
@@ -51,6 +53,12 @@ class Course_file(db.Model):
     course = db.Column(db.Integer, db.ForeignKey('course.id'))
     text = db.Column(db.String(65536))
     filename = db.Column(db.String(256))
+
+    def __init__(self, course, file):
+        self.course = course
+        self.text = file.filename
+        self.filename = uuid.uuid4().hex
+        file.save(app.config['UPLOAD_FOLDER'] + self.filename)
 
 
 class Announcement(db.Model):

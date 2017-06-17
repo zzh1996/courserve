@@ -1,7 +1,7 @@
 {% extends "course.html" %}
 
 {% block coursecontent %}
-<h3>通知</h3>
+<h3>课件</h3>
 <table class="table">
     <thead>
     <tr>
@@ -9,10 +9,7 @@
             序号
         </th>
         <th>
-            时间
-        </th>
-        <th>
-            内容
+            文件名
         </th>
         {% if admin %}
         <th>
@@ -22,20 +19,17 @@
     </tr>
     </thead>
     <tbody>
-    {% for a in announcements %}
+    {% for f in files %}
     <tr>
         <td>
             {{loop.index}}
         </td>
         <td>
-            {{a.time}}
-        </td>
-        <td>
-            {{a.text}}
+            <a href="{{url_for('download',id=f.id)}}">{{f.text}}</a>
         </td>
         {% if admin %}
         <td>
-            <a class="btn btn-sm btn-default" href={{url_for('announcement_delete',id=course.id,aid=a.id)}}>删除</a>
+            <a class="btn btn-sm btn-default" href={{url_for('file_delete',id=course.id,fid=f.id)}}>删除</a>
         </td>
         {% endif %}
     </tr>
@@ -43,15 +37,15 @@
     </tbody>
 </table>
 {% if admin %}
-<form role="form" method="post">
+<form role="form" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="text">
-            发布新通知
+        <label for="file">
+            上传新课件
         </label>
-        <input type="text" class="form-control" id="text" name="text">
+        <input type="file" name="file" id="file"/>
     </div>
     <button type="submit" class="btn btn-default">
-        发布通知
+        发布课件
     </button>
 </form>
 {% endif %}

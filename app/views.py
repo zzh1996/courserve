@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, flash, abort
+from flask import render_template, redirect, url_for, request, flash, abort, send_file
 from flask_login import current_user, login_required, login_user, logout_user
 from app import app, db
 from app.models import *
@@ -81,15 +81,45 @@ def announcement_delete(id, aid):
         db.session.commit()
     return redirect(url_for('announcement', id=id))
 
+
 @app.route('/course/<int:id>/file/', methods=['POST', 'GET'])
 @login_required
 def file(id):
-    pass
+    if request.method == 'POST':
+        if current_user.teaching(id):
+            file = request.files['file']
+            f = Course_file(id, file)
+            db.session.add(f)
+            db.session.commit()
+            return redirect(url_for('file', id=id))
+    c = Course.query.get(id)
+    f = c.files
+    return render_template('file.html', user=current_user, course=c, files=f,
+                           active=2, admin=current_user.role == 'teacher')
+
+
+@app.route('/download/<int:id>/')
+@login_required
+def download(id):
+    f = Course_file.query.get(id)
+    return send_file(app.config['UPLOAD_FOLDER'] + f.filename, as_attachment=True, attachment_filename=f.text)
+
+
+@app.route('/course/<int:id>/file_delete/<int:fid>')
+@login_required
+def file_delete(id, fid):
+    f = Course_file.query.get(fid)
+    if current_user.teaching(f.course):
+        db.session.delete(f)
+        db.session.commit()
+    return redirect(url_for('file', id=id))
+
 
 @app.route('/course/<int:id>/homework/', methods=['POST', 'GET'])
 @login_required
 def homework(id):
     pass
+
 
 @app.route('/course/<int:id>/list/')
 @login_required
