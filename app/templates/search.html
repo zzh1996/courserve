@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<h3>搜索：{{s}}</h3>
+<div>共{{courses|count}}条结果</div>
+
+<div class="row">
+    {% for c in courses %}
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <img alt="Bootstrap Thumbnail First"
+                 src="{{c.picture}}">
+            <div class="caption">
+                <h3>
+                    {{c.name}}
+                </h3>
+                <p>
+                    任课教师：{{c.teacher_c.name}}<br/>
+                    学期：{{c.semester}}<br/>
+                    ...
+                </p>
+                <p>
+                    <a class="btn btn-primary" href="/course/{{c.id}}">进入课程</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

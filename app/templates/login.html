@@ -1,0 +1,75 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/utils.html" as util %}
+
+{% block head %}
+{{super()}}
+{{fixes.ie8()}}
+{% endblock %}
+
+{% block title %}登录Courserve{% endblock %}
+
+{% block content %}
+{{util.flashed_messages(dismissible=True)}}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="carousel slide" id="carousel-613054">
+				<ol class="carousel-indicators">
+					<li class="active" data-slide-to="0" data-target="#carousel-613054">
+					</li>
+					<li data-slide-to="1" data-target="#carousel-613054">
+					</li>
+					<li data-slide-to="2" data-target="#carousel-613054">
+					</li>
+				</ol>
+				<div class="carousel-inner" >
+					<div class="item active" style="max-height:500px;overflow:hidden;">
+						<img alt="Carousel Bootstrap First" width=100% src="http://vi.ustc.edu.cn/view/201107/W020110714437503402403.jpg">
+						<div class="carousel-caption">
+							<h4>
+								Coureserve课程屋--教师的教学管理助手
+							</h4>
+							<p>
+								方便的课件分发，快捷的通知功能
+							</p>
+						</div>
+					</div>
+					<div class="item" style="max-height:500px;overflow:hidden;">
+						<img alt="Carousel Bootstrap Second" width=100% src="http://vi.ustc.edu.cn/view/201107/W020110714513287661303.jpg">
+						<div class="carousel-caption">
+							<h4>
+								Coureserve课程屋--助教的课程管理助手
+							</h4>
+							<p>
+								一键打包作业下载，便捷的分数登记
+							</p>
+						</div>
+					</div>
+					<div class="item" style="max-height:500px;overflow:hidden;">
+						<img alt="Carousel Bootstrap Third" width=100% src="http://vi.ustc.edu.cn/view/201107/W020110714511519468247.jpg">
+						<div class="carousel-caption">
+							<h4>
+								Coureserve课程屋--学生的学习管理助手
+							</h4>
+							<p>
+								完美地管理自己的课程
+							</p>
+						</div>
+					</div>
+				</div> <a class="left carousel-control" href="#carousel-613054" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-613054" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<h1 class="text-info text-center">
+				欢迎来到Courserve课程屋！
+				<br/>
+				<br/>
+				<br/>
+			</h1>
+			{{ wtf.quick_form(form) }}
+		</div>
+	</div>
+</div>
+{% endblock %}

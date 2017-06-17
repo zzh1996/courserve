@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<h3>
+    {{course.name}}
+    <br/>
+    <br/>
+</h3>
+<div class="row">
+    <div class="col-md-2">
+        <a href="#" class="btn" type="button">通知</a> <br/>
+        <a href="#" class="btn" type="button">课件</a> <br/>
+        <a href="#" class="btn" type="button">作业</a> <br/>
+        <a href="#" class="btn" type="button">名单</a> <br/>
+        <a href="#" class="btn" type="button">讨论区</a>
+    </div>
+    <div class="col-md-10">
+        {% block coursecontent %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
